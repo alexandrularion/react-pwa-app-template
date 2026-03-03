@@ -1,73 +1,90 @@
-# React + TypeScript + Vite
+# React PWA App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Progressive Web App built with **Vite**, **React**, and **TypeScript**, using **vite-plugin-pwa** for installability, offline support, and a generated web app manifest.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** with **TypeScript** for type-safe UI
+- **Vite 7** for fast dev server (HMR) and optimized production builds
+- **PWA support** via [vite-plugin-pwa](https://vite-pwa-org.netlify.app/):
+  - Web app manifest (name, theme color, icons)
+  - Service worker with Workbox (auto-update, precaching of assets)
+  - Installable on mobile and desktop; works offline for cached resources
+- **Home page** with three sections:
+  - **Hero** — full-height intro with headline and primary CTA
+  - **Features** — responsive grid of feature cards (Vite, PWA, TypeScript)
+  - **CTA** — closing section with actions and links
 
-## React Compiler
+## Prerequisites
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Node.js** 18+ (or 20+ recommended)
+- **npm** (or yarn/pnpm)
 
-## Expanding the ESLint configuration
+## Setup
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Clone the repository** (or use this as a template):
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+   ```bash
+   git clone <repository-url>
+   cd react-pwa-app
+   ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+2. **Install dependencies:**
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+   ```bash
+   npm install
+   ```
+
+3. **Run the dev server:**
+
+   ```bash
+   npm run dev
+   ```
+
+   Open the URL shown in the terminal (e.g. `http://localhost:5173`).
+
+## Scripts
+
+| Command        | Description                                      |
+|----------------|--------------------------------------------------|
+| `npm run dev`  | Start Vite dev server with HMR                   |
+| `npm run build`| Type-check with TypeScript, then production build|
+| `npm run preview` | Serve the `dist` folder (test production build) |
+| `npm run lint` | Run ESLint                                      |
+
+## PWA behavior
+
+- **Development:** The service worker is not active by default in dev. Use a production build to test PWA behavior.
+- **Production:** After `npm run build`, the plugin generates:
+  - `dist/sw.js` — service worker
+  - `dist/workbox-*.js` — Workbox runtime
+  - `dist/manifest.webmanifest` — web app manifest
+- **Testing install & offline:** Run `npm run preview` and open the app in a browser (Chrome/Edge/Safari). Use “Add to Home Screen” or “Install app” to install; then you can test offline by disabling the network in DevTools.
+
+## Project structure
+
+```
+react-pwa-app/
+├── index.html          # Entry HTML; PWA meta tags, fonts
+├── vite.config.ts      # Vite + React + VitePWA config
+├── tsconfig.json       # TypeScript config
+├── package.json
+├── public/             # Static assets (if any)
+└── src/
+    ├── main.tsx        # React entry point
+    ├── App.tsx         # Home page and sections
+    ├── App.css         # Section and component styles
+    ├── index.css       # Global styles and CSS variables
+    └── assets/         # Images, icons
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Customization
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **App name and PWA metadata:** Edit `vite.config.ts` under the `manifest` option (e.g. `name`, `short_name`, `theme_color`, `icons`). Optionally adjust meta tags in `index.html` (e.g. `theme-color`, `apple-mobile-web-app-status-bar-style`).
+- **Styling:** Update CSS variables in `src/index.css` (e.g. `--accent`, `--surface`) and section styles in `src/App.css`.
+- **Content:** Change copy and structure in `src/App.tsx` (hero, feature cards, CTA).
+- **Routes:** Add React Router (or another router) and extra pages as needed; the PWA will precache built assets automatically.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## License
+
+MIT (or your chosen license).
