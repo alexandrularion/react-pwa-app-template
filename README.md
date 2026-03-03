@@ -26,7 +26,7 @@ A Progressive Web App built with **Vite**, **React**, and **TypeScript**, using 
 
    ```bash
    git clone <repository-url>
-   cd react-pwa-app
+   cd react-pwa-app-template
    ```
 
 2. **Install dependencies:**
@@ -64,7 +64,7 @@ A Progressive Web App built with **Vite**, **React**, and **TypeScript**, using 
 ## Project structure
 
 ```
-react-pwa-app/
+react-pwa-app-template/
 ├── index.html          # Entry HTML; PWA meta tags, fonts
 ├── vite.config.ts      # Vite + React + VitePWA config
 ├── tsconfig.json       # TypeScript config
